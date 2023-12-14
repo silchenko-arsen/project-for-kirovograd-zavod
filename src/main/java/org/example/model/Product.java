@@ -1,4 +1,4 @@
-package org.example.product;
+package org.example.model;
 
 import java.math.BigDecimal;
 
@@ -8,12 +8,8 @@ public class Product {
     private BigDecimal price;
     private Integer type;
 
-    public Product(Long number, String name, BigDecimal price, Integer type) {
-        this.number = number;
-        this.name = name;
-        this.price = price;
-        this.type = type;
-    }
+
+    public Product() {}
 
     public Long getNumber() {
         return number;
