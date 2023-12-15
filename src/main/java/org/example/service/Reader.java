@@ -1,21 +1,28 @@
 package org.example.service;
 
+import org.example.exception.FileNameException;
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.IOException;
 
-import static java.lang.Character.LINE_SEPARATOR;
 
 public class Reader {
-    public String readFromFile(String fromFileName) {
-        StringBuilder stringBuilder = new StringBuilder();
-        try (BufferedReader reader = new BufferedReader(new FileReader(fromFileName))) {
+    private static final String LINE_SEPARATOR = "\n";
+    private static final String LINE_SPLITTER = ";\n";
+    private static final String LINE_FOR_CONTAINS = ";";
+    public String[] read(String fileName) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
+            StringBuilder stringBuilder = new StringBuilder();
             String line;
             while ((line = reader.readLine()) != null) {
                 stringBuilder.append(line).append(LINE_SEPARATOR);
             }
-        } catch (Exception e) {
-            throw new RuntimeException("Can't read data from the file " + fromFileName, e);
+            if (stringBuilder.toString().contains(LINE_FOR_CONTAINS)){
+                return stringBuilder.toString().split(LINE_SPLITTER);
+            }
+            return stringBuilder.toString().split(LINE_SEPARATOR);
+        } catch (IOException ex) {
+            throw new FileNameException("Can't read data from the file: " + fileName, ex);
         }
-        return stringBuilder.toString();
     }
 }

@@ -6,18 +6,26 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class Formatter {
-    public List<Product> createProducts(String text) {
+    private static final String LINE_SPLITTER = "\t";
+    private static final char REGEX = ',';
+    private static final char REPLACEMENT = '.';
+    private static final int ZERO_INDEX = 0;
+    private static final int FIRST_INDEX = 1;
+    private static final int SECOND_INDEX = 2;
+    private static final int THIRD_INDEX = 3;
+
+
+    public List<Product> createProducts(String[] lines) {
         List<Product> products = new ArrayList<>();
-        String newText = text.replaceAll(",",".");
-        final String[] lines = newText.split("13");
         for (String line : lines) {
-            String[] words = line.split("\t");
+            String[] words = line.replace(REGEX, REPLACEMENT).split(LINE_SPLITTER);
             Product product = new Product();
-            product.setNumber(Long.parseLong(words[0]));
-            product.setName(words[1]);
-            product.setPrice(BigDecimal.valueOf(Double.parseDouble(words[2])));
-            product.setType(Integer.parseInt(words[3]));
+            product.setNumber(Long.parseLong(words[ZERO_INDEX]));
+            product.setName(words[FIRST_INDEX]);
+            product.setPrice(BigDecimal.valueOf(Double.parseDouble(words[SECOND_INDEX])));
+            product.setType(Integer.parseInt(words[THIRD_INDEX]));
             products.add(product);
         }
         return products;

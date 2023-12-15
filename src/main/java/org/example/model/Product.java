@@ -8,8 +8,8 @@ public class Product {
     private BigDecimal price;
     private Integer type;
 
-
-    public Product() {}
+    public Product() {
+    }
 
     public Long getNumber() {
         return number;
