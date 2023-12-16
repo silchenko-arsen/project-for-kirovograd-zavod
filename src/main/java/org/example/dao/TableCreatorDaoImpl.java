@@ -14,9 +14,10 @@ public class TableCreatorDaoImpl implements TableCreatorDao {
                  PreparedStatement preparedStatement = connection.prepareStatement(queryForCreationTable)) {
                 preparedStatement.executeUpdate();
             } catch (SQLException e) {
-                throw new DataProcessingException("Can`t create table \"products\" ", e);
+                throw new DataProcessingException("Can`t create table 'products' ", e);
             }
         }
+        System.out.println("Table 'products' created");
     }
 }
 

@@ -16,7 +16,6 @@ public class Formatter {
     private static final int SECOND_INDEX = 2;
     private static final int THIRD_INDEX = 3;
 
-
     public List<Product> createProducts(String[] lines) {
         List<Product> products = new ArrayList<>();
         for (String line : lines) {

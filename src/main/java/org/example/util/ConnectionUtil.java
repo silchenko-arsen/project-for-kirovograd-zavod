@@ -1,6 +1,7 @@
 package org.example.util;
 
-import org.example.exception.FileNameException;
+import org.example.exception.FileNotFoundException;
+import org.example.exception.LoadDriverException;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -11,22 +12,17 @@ import java.util.Properties;
 
 public final class ConnectionUtil {
     private static final String PROPERTIES_FILE = "application.properties";
+    private static final String URL = "database.url";
+    private static final String USERNAME = "database.username";
+    private static final String PASSWORD = "database.password";
     private static final Properties PROPERTIES = loadProperties();
 
     private ConnectionUtil() {}
 
-    static {
-        try {
-            Class.forName(PROPERTIES.getProperty("database.driver"));
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException("Can't load JDBC driver for MySQL", e);
-        }
-    }
-
     public static Connection getConnection() throws SQLException {
-        String url = PROPERTIES.getProperty("database.url");
-        String username = PROPERTIES.getProperty("database.username");
-        String password = PROPERTIES.getProperty("database.password");
+        String url = PROPERTIES.getProperty(URL);
+        String username = PROPERTIES.getProperty(USERNAME);
+        String password = PROPERTIES.getProperty(PASSWORD);
         return DriverManager.getConnection(url, username, password);
     }
 
@@ -35,7 +31,7 @@ public final class ConnectionUtil {
         try (InputStream input = ConnectionUtil.class.getClassLoader().getResourceAsStream(PROPERTIES_FILE)) {
             properties.load(input);
         } catch (IOException e) {
-            throw new FileNameException("Sorry, unable to find " + PROPERTIES_FILE, e);
+            throw new FileNotFoundException("Sorry, unable to find " + PROPERTIES_FILE, e);
         }
         return properties;
     }

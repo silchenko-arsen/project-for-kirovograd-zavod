@@ -1,6 +1,6 @@
 package org.example.service;
 
-import org.example.exception.FileNameException;
+import org.example.exception.FileNotFoundException;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -22,7 +22,7 @@ public class Reader {
             }
             return stringBuilder.toString().split(LINE_SEPARATOR);
         } catch (IOException ex) {
-            throw new FileNameException("Can't read data from the file: " + fileName, ex);
+            throw new FileNotFoundException("Can't read data from the file: " + fileName, ex);
         }
     }
 }
